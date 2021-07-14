@@ -2,13 +2,9 @@ package api.libertya.org.controller;
 
 import api.libertya.org.common.LoginInfo;
 import api.libertya.org.service.BPartnerService;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.openXpertya.model.X_C_BPartner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class BPartnerController extends GeneralController {
