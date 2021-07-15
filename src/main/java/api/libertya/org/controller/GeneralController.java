@@ -19,11 +19,6 @@ public abstract class GeneralController {
     public static final String ENV_OXP_HOME 			= "OXP_HOME";
     public static final String ENV_OXP_API_LOG 			= "OXP_API_LOG";
 
-    /** Info de acceso */
-    LoginInfo loginInfo = null;
-
-
-
     /** Invocacion inicial en comun a toda operacion */
     protected void init(LoginInfo loginInfo) throws AuthorizationException, IllegalArgumentException {
         setClientOrg(loginInfo.getClientID(), loginInfo.getOrgID());
@@ -32,9 +27,9 @@ public abstract class GeneralController {
     }
 
     /** Estructura en comun a toda operacion de la API */
-    protected ResponseEntity<String> command(ActivityInterface method)  {
+    protected ResponseEntity<String> command(String credentials, ActivityInterface method)  {
         try {
-            init(loginInfo);
+            init(LoginInfo.create(credentials));
             return ResponseEntity.status(HttpStatus.SC_OK).body(method.perform());
         } catch (AuthorizationException ae) {
             return ResponseEntity.status(HttpStatus.SC_FORBIDDEN).body(ae.getMessage());

@@ -1,5 +1,7 @@
 package api.libertya.org.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class LoginInfo {
 
     protected String userName;
@@ -7,11 +9,10 @@ public class LoginInfo {
     protected int clientID;
     protected int orgID;
 
-    public LoginInfo(String userName, String password, int clientID, int orgID) {
-        this.userName = userName;
-        this.password = password;
-        this.clientID = clientID;
-        this.orgID = orgID;
+    public static LoginInfo create(String credentials) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        LoginInfo instance = mapper.readValue(credentials, LoginInfo.class);
+        return instance;
     }
 
     public String getUserName() {

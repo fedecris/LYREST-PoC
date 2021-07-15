@@ -1,6 +1,5 @@
 package api.libertya.org.controller;
 
-import api.libertya.org.common.LoginInfo;
 import api.libertya.org.service.BPartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,44 +16,28 @@ public class BPartnerController extends GeneralController {
     }
 
     @GetMapping(path = "api/v1/bpartner/{bPartnerID}")
-    public ResponseEntity<String> bPartnerRetrieveByID(@RequestHeader("userName") String userName,
-                                                       @RequestHeader("password") String password,
-                                                       @RequestHeader("clientID") int clientID,
-                                                       @RequestHeader("orgID") int orgID,
+    public ResponseEntity<String> bPartnerRetrieveByID(@RequestHeader("credentials") String credentials,
                                                        @PathVariable("bPartnerID") int bPartnerID ) {
-        loginInfo = new LoginInfo(userName, password, clientID, orgID);
-        return super.command(() -> jsonSerialize(bPartnerService.retrieveByID(bPartnerID)) );
+        return super.command(credentials, () -> jsonSerialize(bPartnerService.retrieveByID(bPartnerID)) );
     }
 
     @DeleteMapping(path = "api/v1/bpartner/{bPartnerID}")
-    public ResponseEntity<String> bPartnerDeleteByID(@RequestHeader("userName") String userName,
-                                                     @RequestHeader("password") String password,
-                                                     @RequestHeader("clientID") int clientID,
-                                                     @RequestHeader("orgID") int orgID,
+    public ResponseEntity<String> bPartnerDeleteByID(@RequestHeader("credentials") String credentials,
                                                      @PathVariable("bPartnerID") int bPartnerID ) {
-        loginInfo = new LoginInfo(userName, password, clientID, orgID);
-        return super.command(() -> bPartnerService.deleteByID(bPartnerID) );
+        return super.command(credentials, () -> bPartnerService.deleteByID(bPartnerID) );
     }
 
     @PutMapping(path = "api/v1/bpartner/{bPartnerID}")
-    public ResponseEntity<String> bPartnerUpdateByID(@RequestHeader("userName") String userName,
-                                                     @RequestHeader("password") String password,
-                                                     @RequestHeader("clientID") int clientID,
-                                                     @RequestHeader("orgID") int orgID,
+    public ResponseEntity<String> bPartnerUpdateByID(@RequestHeader("credentials") String credentials,
                                                      @PathVariable("bPartnerID") int bPartnerID,
                                                      @RequestBody() String data) {
-        loginInfo = new LoginInfo(userName, password, clientID, orgID);
-        return super.command(() -> bPartnerService.updateByID(bPartnerID, jsonToMap(data)) );
+        return super.command(credentials, () -> bPartnerService.updateByID(bPartnerID, jsonToMap(data)) );
     }
 
     @PostMapping(path = "api/v1/bpartner")
-    public ResponseEntity<String> bPartnerInsert(@RequestHeader("userName") String userName,
-                                                 @RequestHeader("password") String password,
-                                                 @RequestHeader("clientID") int clientID,
-                                                 @RequestHeader("orgID") int orgID,
+    public ResponseEntity<String> bPartnerInsert(@RequestHeader("credentials") String credentials,
                                                  @RequestBody() String data) {
-        loginInfo = new LoginInfo(userName, password, clientID, orgID);
-        return super.command(() -> bPartnerService.insert(jsonToMap(data)) );
+        return super.command(credentials, () -> bPartnerService.insert(jsonToMap(data)) );
 
     }
 
