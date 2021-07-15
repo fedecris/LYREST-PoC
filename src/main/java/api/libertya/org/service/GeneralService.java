@@ -8,29 +8,30 @@ import java.util.Map;
 
 public class GeneralService {
 
-    public PO load(int ID, POLoaderInterface loader) throws IllegalArgumentException {
-        PO po = loader.perform();
-        if (po.getID() <= 0) {
+    protected PO loadPO(int ID, POLoaderInterface loader) throws IllegalArgumentException {
+        PO po = loader.getPOInstance();
+        /* ID es mayor a cero solo para updates */
+        if (ID > 0 && po.getID() <= 0) {
             throw new IllegalArgumentException(String.format("ID %d does not exist", ID));
         }
         return po;
     }
 
-    protected String save(PO po) throws IllegalStateException {
+    protected String savePO(PO po) throws IllegalStateException {
         if (!po.save()) {
             throw new IllegalStateException(String.format("Error updating: %s", CLogger.retrieveErrorAsString()));
         }
-        return "Updated OK";
+        return String.valueOf(po.getID());
     }
 
-    public String delete(PO po) throws IllegalArgumentException, IllegalStateException {
+    protected String deletePO(PO po) throws IllegalArgumentException, IllegalStateException {
         if (!po.delete(true)) {
             throw new IllegalStateException(String.format("Error deleting: %s", CLogger.retrieveErrorAsString()));
         }
-        return "Deleted OK";
+        return String.valueOf(po.getID());
     }
 
-    public PO setValues(PO po, Map<String, String> values) {
+    protected PO setValues(PO po, Map<String, String> values) {
         values.keySet().forEach(
                 (k) -> po.set_Value(k, values.get(k))
         );

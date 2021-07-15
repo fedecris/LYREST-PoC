@@ -47,4 +47,15 @@ public class BPartnerController extends GeneralController {
         return super.command(() -> bPartnerService.updateByID(bPartnerID, jsonToMap(data)) );
     }
 
+    @PostMapping(path = "api/v1/bpartner")
+    public ResponseEntity<String> bPartnerInsert(@RequestHeader("userName") String userName,
+                                                 @RequestHeader("password") String password,
+                                                 @RequestHeader("clientID") int clientID,
+                                                 @RequestHeader("orgID") int orgID,
+                                                 @RequestBody() String data) {
+        loginInfo = new LoginInfo(userName, password, clientID, orgID);
+        return super.command(() -> bPartnerService.insert(jsonToMap(data)) );
+
+    }
+
 }

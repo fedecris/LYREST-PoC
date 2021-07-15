@@ -16,15 +16,19 @@ public class BPartnerService extends GeneralService {
     }
 
     public String deleteByID(int ID) throws IllegalArgumentException, IllegalStateException {
-        return delete(loadBPartner(ID));
+        return deletePO(loadBPartner(ID));
     }
 
     public String updateByID(int ID, Map<String, String> values) {
-        return save(setValues(loadBPartner(ID), values));
+        return savePO(setValues(loadBPartner(ID), values));
+    }
+
+    public String insert(Map<String, String> values) {
+        return savePO(setValues(loadBPartner(0), values));
     }
 
     protected MBPartner loadBPartner(int ID) {
-        return (MBPartner)load(ID, () -> new MBPartner(Env.getCtx(), ID, null));
+        return (MBPartner)loadPO(ID, () -> new MBPartner(Env.getCtx(), ID, null));
     }
 
 

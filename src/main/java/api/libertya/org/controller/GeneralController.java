@@ -1,8 +1,8 @@
 package api.libertya.org.controller;
 
+import api.libertya.org.common.ActivityInterface;
 import api.libertya.org.common.LoginInfo;
 import api.libertya.org.exception.AuthorizationException;
-import api.libertya.org.common.ActivityInterface;
 import api.libertya.org.util.UserManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,7 +13,6 @@ import org.openXpertya.util.Env;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
-import java.util.Properties;
 
 public abstract class GeneralController {
 
