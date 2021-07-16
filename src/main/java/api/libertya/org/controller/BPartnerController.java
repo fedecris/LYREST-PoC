@@ -18,27 +18,26 @@ public class BPartnerController extends GeneralController {
     @GetMapping(path = "api/v1/bpartner/{bPartnerID}")
     public ResponseEntity<String> bPartnerRetrieveByID(@RequestHeader("credentials") String credentials,
                                                        @PathVariable("bPartnerID") int bPartnerID ) {
-        return super.command(credentials, () -> jsonSerialize(bPartnerService.retrieveByID(bPartnerID)) );
+        return command(credentials, () -> jsonSerialize(bPartnerService.retrieveByID(bPartnerID)) );
     }
 
     @DeleteMapping(path = "api/v1/bpartner/{bPartnerID}")
     public ResponseEntity<String> bPartnerDeleteByID(@RequestHeader("credentials") String credentials,
                                                      @PathVariable("bPartnerID") int bPartnerID ) {
-        return super.command(credentials, () -> bPartnerService.deleteByID(bPartnerID) );
+        return command(credentials, () -> bPartnerService.deleteByID(bPartnerID) );
     }
 
     @PutMapping(path = "api/v1/bpartner/{bPartnerID}")
     public ResponseEntity<String> bPartnerUpdateByID(@RequestHeader("credentials") String credentials,
                                                      @PathVariable("bPartnerID") int bPartnerID,
-                                                     @RequestBody() String data) {
-        return super.command(credentials, () -> bPartnerService.updateByID(bPartnerID, jsonToMap(data)) );
+                                                     @RequestBody() String values) {
+        return command(credentials, () -> bPartnerService.updateByID(bPartnerID, jsonToMap(values)) );
     }
 
     @PostMapping(path = "api/v1/bpartner")
     public ResponseEntity<String> bPartnerInsert(@RequestHeader("credentials") String credentials,
-                                                 @RequestBody() String data) {
-        return super.command(credentials, () -> bPartnerService.insert(jsonToMap(data)) );
-
+                                                 @RequestBody() String values) {
+        return command(credentials, () -> bPartnerService.insert(jsonToMap(values)) );
     }
 
 }
