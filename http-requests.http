@@ -1,38 +1,26 @@
-GET http://localhost:8080/api/v1/test
-credentials: { username: System, password: System, clientID: 0, orgID: 0 }
-
-###
+### BPARTNERS
 
 GET http://localhost:8080/api/v1/bpartner/1012145
-credentials:{userName:System,password:System,clientID:0,orgID:0}
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
 
 ###
 
 DELETE http://localhost:8080/api/v1/bpartner/1002050
-userName: System
-password: System
-clientID: 0
-orgID: 0
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
 
 ###
 
 PUT http://localhost:8080/api/v1/bpartner/1012145
-userName: System
-password: System
-clientID: 0
-orgID: 0
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
 
 {    
-    "Name" : "GESTAFIP"  
+    "Name" : "FooBar"  
 }
 
 ###
 
 POST http://localhost:8080/api/v1/bpartner
-userName: AdminLibertya
-password: AdminLibertya
-clientID: 1010016
-orgID: 0
+credentials:{"userName":"AdminLibertya", "password":"AdminLibertya", "clientID":1010016, "orgID":0}
 
 {    
     "AD_Client_ID"  : 1010016,
@@ -40,4 +28,38 @@ orgID: 0
     "Name"          : "Test",
     "Value"         : "TEST",
     "C_BP_Group_ID" : 1010043
+}
+
+### PRODUCTS
+
+GET http://localhost:8080/api/v1/product/1015400
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
+
+###
+
+DELETE http://localhost:8080/api/v1/product/1015400
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
+
+###
+
+PUT http://localhost:8080/api/v1/product/1015400
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
+
+{    
+    "Name" : "Estandar"  
+}
+
+###
+
+POST http://localhost:8080/api/v1/product
+credentials:{"userName":"AdminLibertya", "password":"AdminLibertya", "clientID":1010016, "orgID":0}
+
+{    
+    "AD_Client_ID"          : 1010016,
+    "AD_Org_ID"             : 1010053,
+    "Name"                  : "TestProduct",
+    "Value"                 : "TP0001",
+    "C_UOM_ID"              : 100,
+    "M_Product_Category_ID" : 1010146,
+    "C_TaxCategory_ID"     : 1010047  
 }
