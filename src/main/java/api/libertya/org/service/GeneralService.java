@@ -1,7 +1,6 @@
 package api.libertya.org.service;
 
 import api.libertya.org.common.POLoaderInterface;
-import org.openXpertya.model.MBPartner;
 import org.openXpertya.model.PO;
 import org.openXpertya.util.CLogger;
 
@@ -10,31 +9,39 @@ import java.util.Map;
 public abstract class GeneralService {
 
     /**
-     * Unico metodo a implementar en las subclases para CRUD de entidades
-     * @param ID identificador del objeto a recuperar/modificar/eliminar o 0 en caso de insercion
+     * Metodo a implementar en las subclases para entidades a insertar/modificar/eliminar
+     * @param ID identificador del objeto a modificar/eliminar o 0 en caso de insercion
      * @return un PO especifico, segun subclase por ejemplo MBPartner, MProduct, etc.
      *          apoyandose en loadPO a fin de validar la existencia del objeto
      */
-    protected abstract PO loadPOSpecific(int ID);
+    protected abstract PO instantiateModelValidationPO(int ID);
+
+    /**
+     * Metodo a implementar en las subclases para recuperacion de entidades a serializar
+     * @param ID identificador del objeto a recuperar
+     * @return un PO especifico, segun subclase por ejemplo X_C_BPartner, X_M_Product, etc.
+     *          apoyandose en loadPO a fin de validar la existencia del objeto
+     */
+    protected abstract PO instantiateSerializablePO(int ID);
 
     /** Recupera una entidad por su ID */
     public PO retrieveByID(int ID) throws IllegalArgumentException {
-        return loadPOSpecific(ID);
+        return instantiateSerializablePO(ID);
     }
 
     /** Elimina una entidad por su ID */
     public String deleteByID(int ID) throws IllegalArgumentException, IllegalStateException {
-        return deletePO(loadPOSpecific(ID));
+        return deletePO(instantiateModelValidationPO(ID));
     }
 
     /** Elimina una entidad por su ID */
     public String updateByID(int ID, Map<String, String> values) {
-        return savePO(setValues(loadPOSpecific(ID), values));
+        return savePO(setValues(instantiateModelValidationPO(ID), values));
     }
 
     /** Inserta una nueva entidad */
     public String insert(Map<String, String> values) {
-        return savePO(setValues(loadPOSpecific(0), values));
+        return savePO(setValues(instantiateModelValidationPO(0), values));
     }
 
     /** Creacion / Recuperacion de un objeto segun su ID */
