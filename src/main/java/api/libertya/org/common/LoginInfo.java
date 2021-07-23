@@ -1,5 +1,6 @@
 package api.libertya.org.common;
 
+import api.libertya.org.util.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LoginInfo {
@@ -9,10 +10,20 @@ public class LoginInfo {
     protected int clientID;
     protected int orgID;
 
+    public LoginInfo() {
+
+    }
+
     public static LoginInfo create(String credentials) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        LoginInfo instance = mapper.readValue(credentials, LoginInfo.class);
-        return instance;
+        return mapper.readValue(credentials, LoginInfo.class);
+    }
+
+    public LoginInfo(String userName, String password, int clientID, int orgID) {
+        setUserName(userName);
+        setPassword(password);
+        setClientID(clientID);
+        setOrgID(orgID);
     }
 
     public String getUserName() {
@@ -47,5 +58,8 @@ public class LoginInfo {
         this.orgID = orgID;
     }
 
+    public String toJson() throws Exception {
+        return JSON.serialize(this).replace("\n", "");
+    }
 }
 

@@ -1,6 +1,7 @@
 package api.libertya.org.controller;
 
 import api.libertya.org.service.BPartnerService;
+import api.libertya.org.util.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class BPartnerController extends GeneralController {
     @GetMapping(path = "api/v1/bpartner/{bPartnerID}")
     public ResponseEntity<String> bPartnerRetrieveByID(@RequestHeader("credentials") String credentials,
                                                        @PathVariable("bPartnerID") int bPartnerID ) {
-        return command(credentials, () -> jsonSerialize(bPartnerService.retrieveByID(bPartnerID)) );
+        return command(credentials, () -> JSON.serialize(bPartnerService.retrieveByID(bPartnerID)) );
     }
 
     @DeleteMapping(path = "api/v1/bpartner/{bPartnerID}")
@@ -31,13 +32,13 @@ public class BPartnerController extends GeneralController {
     public ResponseEntity<String> bPartnerUpdateByID(@RequestHeader("credentials") String credentials,
                                                      @PathVariable("bPartnerID") int bPartnerID,
                                                      @RequestBody() String values) {
-        return command(credentials, () -> bPartnerService.updateByID(bPartnerID, jsonToMap(values)) );
+        return command(credentials, () -> bPartnerService.updateByID(bPartnerID, JSON.toMap(values)) );
     }
 
     @PostMapping(path = "api/v1/bpartner")
     public ResponseEntity<String> bPartnerInsert(@RequestHeader("credentials") String credentials,
                                                  @RequestBody() String values) {
-        return command(credentials, () -> bPartnerService.insert(jsonToMap(values)) );
+        return command(credentials, () -> bPartnerService.insert(JSON.toMap(values)) );
     }
 
 }

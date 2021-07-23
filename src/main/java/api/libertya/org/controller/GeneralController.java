@@ -83,15 +83,5 @@ public abstract class GeneralController {
         System.setProperty(ENV_OXP_API_LOG, oxpAPILog == null ? oxpHomeDir : oxpAPILog);
     }
 
-    /** PO -> JSon */
-    protected String jsonSerialize(PO po) throws Exception {
-        return new ObjectMapper()
-                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                .writerWithDefaultPrettyPrinter().writeValueAsString(po);
-    }
-
-    protected Map<String, String> jsonToMap(String data) throws Exception {
-        return new ObjectMapper().readValue(data, Map.class);
-    }
 
 }
