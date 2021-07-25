@@ -45,5 +45,11 @@ public class BPartnerTest extends GeneralTest {
         assertThat(Integer.parseInt(Objects.requireNonNull(response.getBody()))).isEqualTo(bPartnerID);
     }
 
+    @Test
+    public void postBPartnerChangeNameShouldReturnOKAndID() throws Exception {
+        ResponseEntity<String> response = restTemplate.exchange(getBaseURL() + "/bpartner", HttpMethod.POST, getAuthRequest("{ \"AD_Client_ID\":1010016, \"AD_Org_ID\":1010053, \"Name\":\"Test\", \"Value\":\"TEST\", \"C_BP_Group_ID\":1010043 }"), String.class);
+        assertThat(response.getStatusCode().toString()).contains("200");
+        assertThat(Integer.parseInt(Objects.requireNonNull(response.getBody()))).isGreaterThan(0);
+    }
 
 }
