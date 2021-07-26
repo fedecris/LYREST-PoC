@@ -2,7 +2,11 @@ package api.libertya.org.service;
 
 import api.libertya.org.common.POLoaderInterface;
 import org.openXpertya.model.PO;
+import org.openXpertya.process.DocAction;
+import org.openXpertya.process.DocumentEngine;
 import org.openXpertya.util.CLogger;
+import org.openXpertya.util.Env;
+import org.openXpertya.util.Msg;
 
 import java.util.Map;
 
@@ -24,6 +28,11 @@ public abstract class GeneralService {
      */
     protected abstract PO instantiateSerializablePO(int ID);
 
+    /** Recupera un PO que tambien implemente DocAction  */
+    protected DocAction instantiateModelDocAction(int ID) {
+        return (DocAction)instantiateModelValidationPO(ID);
+    }
+
     /** Recupera una entidad por su ID */
     public PO retrieveByID(int ID) throws IllegalArgumentException {
         return instantiateSerializablePO(ID);
@@ -42,6 +51,21 @@ public abstract class GeneralService {
     /** Inserta una nueva entidad */
     public String insert(Map<String, String> values) {
         return savePO(setValues(instantiateModelValidationPO(0), values));
+    }
+
+    /** Completa un documento */
+    public String completeByID(int ID) throws IllegalArgumentException, IllegalStateException {
+        return processDoc(instantiateModelDocAction(ID), DocAction.ACTION_Complete);
+    }
+
+    /** Cierra un documento */
+    public String closeByID(int ID) throws IllegalArgumentException, IllegalStateException {
+        return processDoc(instantiateModelDocAction(ID), DocAction.ACTION_Close);
+    }
+
+    /** Anula un documento */
+    public String voidByID(int ID) throws IllegalArgumentException, IllegalStateException {
+        return processDoc(instantiateModelDocAction(ID), DocAction.ACTION_Void);
     }
 
     /** Creacion / Recuperacion de un objeto segun su ID */
@@ -72,6 +96,13 @@ public abstract class GeneralService {
             throw new IllegalStateException(String.format("Error deleting: %s", CLogger.retrieveErrorAsString()));
         }
         return String.valueOf(po.getID());
+    }
+
+    /** Procesamiento del documento */
+    private String processDoc(DocAction document, String action) throws IllegalStateException {
+        if (!DocumentEngine.processAndSave(document, action, false))
+            throw new IllegalStateException(Msg.parseTranslation(Env.getCtx(), document.getProcessMsg()));
+        return document.getDocStatus();
     }
 
     /** Asignacion de valores en un PO a partir del map recibido */

@@ -68,3 +68,18 @@ credentials:{"userName":"AdminLibertya", "password":"AdminLibertya", "clientID":
 
 GET http://localhost:8080/api/v1/order/20477397
 credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
+
+###
+
+POST http://localhost:8080/api/v1/order/20477397/complete
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
+
+###
+
+POST http://localhost:8080/api/v1/order/20477397/close
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}
+
+###
+
+POST http://localhost:8080/api/v1/order/20477397/void
+credentials:{"userName":"System", "password":"System", "clientID":0, "orgID":0}

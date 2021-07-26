@@ -41,4 +41,22 @@ public class OrderController extends GeneralController {
                                               @RequestBody() String values) {
         return command(credentials, () -> (orderService.insert(JSON.toMap(values))) );
     }
+
+    @PostMapping(path = Paths.ORDER + "/{orderID}" + Paths.COMPLETE)
+    public ResponseEntity<String> orderComplete(@RequestHeader("credentials") String credentials,
+                                                @PathVariable("orderID") int orderID) {
+        return command(credentials, () -> (orderService.completeByID(orderID)) );
+    }
+
+    @PostMapping(path = Paths.ORDER + "/{orderID}" + Paths.CLOSE)
+    public ResponseEntity<String> orderClose(@RequestHeader("credentials") String credentials,
+                                             @PathVariable("orderID") int orderID) {
+        return command(credentials, () -> (orderService.closeByID(orderID)) );
+    }
+
+    @PostMapping(path = Paths.ORDER + "/{orderID}" + Paths.VOID)
+    public ResponseEntity<String> orderVoid(@RequestHeader("credentials") String credentials,
+                                            @PathVariable("orderID") int orderID) {
+        return command(credentials, () -> (orderService.voidByID(orderID)) );
+    }
 }
