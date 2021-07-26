@@ -1,6 +1,7 @@
 package api.libertya.org;
 
 import api.libertya.org.common.LoginInfo;
+import api.libertya.org.common.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -21,7 +22,7 @@ public class GeneralTest {
     protected LoginInfo credentialsWrong = new LoginInfo("System", "SystemX", 0, 0);
 
     protected String getBaseURL() {
-        return String.format("http://localhost:%d/api/v1", port);
+        return String.format("http://localhost:%d" + Paths.BASE + Paths.VERSION, port);
     }
 
     protected HttpEntity<?> getHeadlessRequest() {
